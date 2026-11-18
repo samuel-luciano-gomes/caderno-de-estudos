@@ -1,0 +1,10 @@
+// Servidor só para testar no computador: node serve-local.js  →  http://localhost:4320
+const http=require('http'), fs=require('fs'), path=require('path');
+const root=__dirname, port=process.env.PORT||4320;
+http.createServer((req,res)=>{
+  let p=decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p+='index.html';
+  const f=path.join(root,path.normalize(p).replace(/^([.][.][\/])+/,''));
+  if (!f.startsWith(root)) { res.writeHead(403); return res.end(); }
+  fs.readFile(f,(e,d)=>{ if(e){ res.writeHead(404); return res.end('Não encontrado'); }
+    res.writeHead(200,{'Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json'})[path.extname(f)]||'application/octet-stream'}); res.end(d); });
+}).listen(port,()=>console.log('Caderno em http://localhost:'+port));
