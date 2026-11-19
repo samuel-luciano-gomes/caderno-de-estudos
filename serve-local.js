@@ -6,5 +6,5 @@ http.createServer((req,res)=>{
   const f=path.join(root,path.normalize(p).replace(/^([.][.][\/])+/,''));
   if (!f.startsWith(root)) { res.writeHead(403); return res.end(); }
   fs.readFile(f,(e,d)=>{ if(e){ res.writeHead(404); return res.end('Não encontrado'); }
-    res.writeHead(200,{'Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json'})[path.extname(f)]||'application/octet-stream'}); res.end(d); });
+    res.writeHead(200,{'Cache-Control':'no-store','Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript','.json':'application/json'})[path.extname(f)]||'application/octet-stream'}); res.end(d); });
 }).listen(port,()=>console.log('Caderno em http://localhost:'+port));

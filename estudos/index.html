@@ -84,6 +84,7 @@ main{padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px)
 .subj .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .subj .ct{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .row{display:flex;align-items:center;gap:2px}
+.row .subj{flex:1;min-width:0}
 .row .more{border:0;background:transparent;color:var(--muted);width:28px;height:28px;border-radius:6px;flex:none;font-weight:700}
 .row .more:hover{background:var(--raised);color:var(--ink)}
 .subj-edit{margin:4px 4px 10px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--raised);display:grid;gap:8px}
@@ -122,7 +123,8 @@ input.txt,select.txt{width:100%;border:1px solid var(--line);background:var(--su
 .ed-title{width:100%;border:0;background:transparent;font-family:var(--f-display);font-size:24px;font-weight:600;padding:0;letter-spacing:-.015em}
 .ed-title::placeholder{color:var(--muted);opacity:.6}
 .ed-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 14px}
-.ed-meta select{width:auto;max-width:220px}
+.ed-meta select{width:auto;min-width:0;max-width:min(240px,100%);text-overflow:ellipsis}
+.ed-meta{min-width:0}
 .ed-meta .tags{flex:1;min-width:180px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .seg button{border:0;background:var(--surface);padding:6px 10px;font-size:13px;font-weight:600;color:var(--muted);display:flex;gap:6px;align-items:center}
@@ -144,7 +146,7 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 /* mapa */
 .map-wrap{display:grid;gap:10px}
 .map-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.map-bar select{width:auto;max-width:300px}
+.map-bar select{width:auto;min-width:0;max-width:min(300px,100%)}
 .map-bar .sp{flex:1}
 .zoom{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
 .zoom button{border:0;background:transparent;width:34px;height:34px;font-weight:700;font-size:16px}
@@ -156,7 +158,7 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 .map .node:focus{outline:none}
 .map .node:focus-visible rect.bg{stroke:var(--accent);stroke-width:2.5}
 .map-info{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:38px;padding:6px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
-.map-info .crumb{flex:1;min-width:0;color:var(--muted)}
+.map-info .crumb{flex:1;min-width:0;color:var(--muted);overflow-wrap:anywhere}
 .map-info .crumb b{color:var(--ink)}
 
 /* painel */
@@ -167,7 +169,8 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px}
 .card h3{margin:0;font-family:var(--f-display);font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
-.card h3 .dot{width:10px;height:10px;border-radius:2px}
+.card h3{min-width:0;overflow-wrap:anywhere}
+.card h3 .dot{flex:none;width:10px;height:10px;border-radius:2px}
 .bar{display:flex;height:6px;border-radius:2px;overflow:hidden;background:var(--raised)}
 .bar span{display:block;height:100%}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -180,7 +183,8 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 .rev:last-child{border-bottom:0}
 .rev:hover{background:var(--raised)}
 .rev .ti{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rev .sub{grid-column:1/-1;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;flex-wrap:wrap}
+.rev .sub span:first-child{flex:none}
+.rev .sub{overflow-wrap:anywhere;grid-column:1/-1;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px;flex-wrap:wrap}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .chip{border:1px solid var(--line);background:var(--raised);border-radius:4px;padding:3px 10px;font-family:var(--f-mono);font-size:12px}
 .chip:hover{border-color:var(--accent)}
@@ -678,7 +682,7 @@ function renderEditor(remote){
   const mat = n.materialId && S.materials.get(n.materialId);
   box.replaceChildren(
     title,
-    mat && h('div',{class:'from-mat'}, 'Gerada do PDF “'+mat.name+'”', h('button',{onclick:()=>{ S.selMat=mat.id; setView('materiais'); }}, 'Abrir material')),
+    mat ? h('div',{class:'from-mat'}, 'Gerada do PDF “'+mat.name+'”', h('button',{onclick:()=>{ S.selMat=mat.id; setView('materiais'); }}, 'Abrir material')) : '',
     h('div',{class:'ed-meta'}, subj, seg, tags),
     h('div',{class:'toolbar'}, tb('Título','# ','Linha vira um ramo principal (#)'), tb('Subtítulo','## ','Linha vira um sub-ramo (##)'), tb('Tópico','- ','Linha vira um tópico (-)'), tb('Subtópico','  - ','Tópico dentro de outro tópico'), h('span',{class:'sp'}), h('span',{class:'hint mono', id:'ed-count'})),
     body,
