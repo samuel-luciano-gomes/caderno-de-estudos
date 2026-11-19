@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-requer-login>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -238,6 +238,12 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 <link rel="stylesheet" href="../assets/comum.css">
 </head>
 <body>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Entrar">
+  <div class="gate-card">
+    <a class="brand" href="../"><span class="logo" aria-hidden="true"></span><span class="bt">Caderno de Estudos</span></a>
+    <div id="gate-body"><p class="gate-wait">Verificando sua conta…</p></div>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
     <a class="brand" href="../" title="Página inicial"><span class="logo" aria-hidden="true"></span><span class="bt">Caderno de Estudos</span></a>
@@ -426,7 +432,7 @@ async function init(){
     const d = lsRead();
     if (d){ S.subjects = d.subjects||[]; (d.notes||[]).forEach(n=>S.notes.set(n.id,n)); (d.materials||[]).forEach(m=>S.materials.set(m.id,m)); }
     S.loaded = true; setSave('local');
-    try{ if (!localStorage.getItem(LS_KEY+'-aviso')){ showBanner('Suas notas ficam guardadas neste navegador. Entre na sua conta para tê-las em todos os aparelhos, ou use Exportar backup no menu ⋯.'); localStorage.setItem(LS_KEY+'-aviso','1'); } }catch(e){ showBanner('Este navegador está bloqueando o armazenamento: as notas não serão guardadas.'); }
+    try{ if (!localStorage.getItem(LS_KEY+'-aviso')){ /* sem aviso de primeiro acesso: as notas ficam na conta */ localStorage.setItem(LS_KEY+'-aviso','1'); } }catch(e){ showBanner('Este navegador está bloqueando o armazenamento: as notas não serão guardadas.'); }
     render();
   }
 }

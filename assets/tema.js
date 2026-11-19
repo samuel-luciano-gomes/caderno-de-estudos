@@ -16,6 +16,8 @@
   function paint(btn, t) { btn.innerHTML = ICONS[t]; btn.title = LABEL[t] + ' (clique para trocar)'; btn.setAttribute('aria-label', LABEL[t] + '. Clique para trocar'); }
 
   apply(get());
+  // marca como conectado antes de pintar, se houver sessão guardada (evita piscar a tela de login)
+  try { for (var i = 0; i < localStorage.length; i++) { if (/^sb-.*-auth-token$/.test(localStorage.key(i))) { root.setAttribute('data-auth', 'in'); break; } } } catch (e) {}
 
   document.addEventListener('DOMContentLoaded', function () {
     var btn = document.getElementById('theme-btn');

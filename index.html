@@ -8,164 +8,333 @@
 <script defer src="assets/config.js"></script>
 <script defer src="assets/conta.js"></script>
 <title>Caderno</title>
-<meta name="description" content="Cadernos de estudo com notas em tópicos, mapa mental automático e organização por matéria. Inclui uma versão para estudantes de Teologia.">
+<meta name="description" content="Caderno de estudos online: anotações em tópicos que viram mapa mental, organização por matéria, revisão e uma versão para o curso de Teologia.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231e3a5f%22%2F%3E%3Cpath%20d%3D%22M10%209h12M10%2016h8M10%2023h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-/* Layout: cabeçalho simples, abertura curta, os dois cadernos lado a lado como escolha principal, e uma faixa explicando como o site guarda as notas. */
+/* Layout: cabeçalho fixo; abertura em duas colunas (texto e prévia do app); escolha do caderno; recursos em grade;
+   chamada final; rodapé. Mesmos tokens dos cadernos: azul-marinho para Estudos, vinho para Teologia. */
 :root{
-  --bg:#f4f5f7; --surface:#ffffff; --raised:#f8f9fb; --ink:#111827; --muted:#667085; --line:#e2e5ea;
-  --navy:#1e3a5f; --navy-soft:#edf1f6; --wine:#6e1f30; --wine-soft:#f4ecee; --on-accent:#ffffff;
+  --bg:#f6f7f9; --surface:#ffffff; --raised:#f3f5f8; --ink:#0f172a; --muted:#5f6b7f; --line:#e3e7ee;
+  --navy:#1e3a5f; --navy-soft:#e9eef6; --wine:#6e1f30; --wine-soft:#f5ebee; --on-accent:#ffffff;
+  --ok:#2c8a57; --hl-a:#3a6aa3; --hl-b:#3d8564; --hl-c:#ad6638; --hl-d:#665b9e;
+  --accent:var(--navy); --accent-ink:var(--on-accent); --danger:#b42318;
   --f-body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
-  --f-text:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
-  --f-mono:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
-  --accent:var(--navy); --accent-ink:var(--on-accent);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0e1014; --surface:#15181d; --raised:#1a1e24; --ink:#e6e8eb; --muted:#9aa1ac; --line:#2a2f37;
-    --navy:#8fb0dc; --navy-soft:#1c2430; --wine:#e2a3b0; --wine-soft:#2a1d22; --on-accent:#0e1014;
+    --bg:#0c0f14; --surface:#141820; --raised:#1a1f28; --ink:#e8ebf0; --muted:#9aa3b2; --line:#262c37;
+    --navy:#8fb0dc; --navy-soft:#1a2433; --wine:#e2a3b0; --wine-soft:#2a1c22; --on-accent:#0c0f14;
+    --ok:#5bb985; --hl-a:#6b97cc; --hl-b:#5aa682; --hl-c:#cc8656; --hl-d:#8f84c4; --danger:#f97066;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0e1014; --surface:#15181d; --raised:#1a1e24; --ink:#e6e8eb; --muted:#9aa1ac; --line:#2a2f37;
-  --navy:#8fb0dc; --navy-soft:#1c2430; --wine:#e2a3b0; --wine-soft:#2a1d22; --on-accent:#0e1014;
+  --bg:#0c0f14; --surface:#141820; --raised:#1a1f28; --ink:#e8ebf0; --muted:#9aa3b2; --line:#262c37;
+  --navy:#8fb0dc; --navy-soft:#1a2433; --wine:#e2a3b0; --wine-soft:#2a1c22; --on-accent:#0c0f14;
+  --ok:#5bb985; --hl-a:#6b97cc; --hl-b:#5aa682; --hl-c:#cc8656; --hl-d:#8f84c4; --danger:#f97066;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--navy);outline-offset:3px}
-.wrap{max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance}
 
-header{background:var(--surface);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;gap:12px;min-height:60px}
-.logo{width:24px;height:24px;border-radius:6px;background:var(--navy);display:grid;place-items:center;flex:none}
-.logo::after{content:"";width:12px;height:10px;background:linear-gradient(var(--on-accent),var(--on-accent)) 0 0/100% 2px no-repeat,linear-gradient(var(--on-accent),var(--on-accent)) 0 50%/70% 2px no-repeat,linear-gradient(var(--on-accent),var(--on-accent)) 0 100%/85% 2px no-repeat}
-header b{font-size:16px;font-weight:600}
-header nav{margin-left:auto;display:flex;gap:18px;font-size:14px;margin-right:6px}
-header nav a{text-decoration:none;color:var(--muted)}
-header nav a:hover{color:var(--ink)}
-header .icon-btn{margin-left:auto}
-header nav + .icon-btn{margin-left:0}
+/* visibilidade conforme a conta */
+html:not([data-auth="in"]) .so-logado{display:none!important}
+html[data-auth="in"] .so-visitante{display:none!important}
 
-.intro{padding-block:56px 32px}
-.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
-h1{font-family:var(--f-text);font-weight:700;font-size:clamp(30px,4.6vw,44px);line-height:1.12;letter-spacing:-.03em;margin:0 0 14px;max-width:20ch;text-wrap:balance}
-.intro p.lead{font-size:17px;color:var(--muted);max-width:58ch;margin:0}
+/* botões */
+.b{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:600;font-size:15px;padding:12px 20px;border-radius:9px;border:1px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:transform .12s,box-shadow .12s,background .12s}
+.b-pri{background:var(--navy);color:var(--on-accent);box-shadow:0 1px 2px rgba(15,23,42,.15),0 6px 16px -6px color-mix(in srgb,var(--navy) 60%,transparent)}
+.b-pri:hover{transform:translateY(-1px)}
+.b-sec{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.b-sec:hover{border-color:color-mix(in srgb,var(--ink) 30%,var(--line))}
+.b-sm{font-size:14px;padding:8px 14px;border-radius:8px}
+.b svg{width:16px;height:16px}
 
-.books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:48px}
-.book{position:relative;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px 26px 22px;overflow:hidden}
-.book::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--tone)}
+/* cabeçalho */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.site.scrolled{border-bottom-color:var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
+header.site .wrap{display:flex;align-items:center;gap:28px;min-height:66px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:17px;letter-spacing:-.01em}
+.logo{width:28px;height:28px;border-radius:8px}
+header nav.links{display:flex;gap:24px;font-size:14.5px;font-weight:500}
+header nav.links a{text-decoration:none;color:var(--muted)}
+header nav.links a:hover{color:var(--ink)}
+.h-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* abertura */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(60% 50% at 85% 10%,color-mix(in srgb,var(--navy) 12%,transparent),transparent 70%),
+  radial-gradient(40% 40% at 0% 100%,color-mix(in srgb,var(--wine) 8%,transparent),transparent 70%)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:56px;align-items:center;padding-block:64px 80px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted)}
+.pill b{background:var(--navy-soft);color:var(--navy);padding:2px 8px;border-radius:999px;font-size:12px}
+.hero h1{font-size:clamp(34px,5vw,54px);line-height:1.06;letter-spacing:-.035em;font-weight:800;margin:20px 0 18px}
+.hero h1 em{font-style:normal;color:var(--navy)}
+.hero .lead{font-size:18px;color:var(--muted);max-width:52ch;margin:0 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin:28px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+.trust li{display:flex;align-items:center;gap:8px}
+.trust svg{width:16px;height:16px;color:var(--ok);flex:none}
+
+/* prévia do app */
+.preview{position:relative;margin:0;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 30px 80px -30px rgba(15,23,42,.35),0 2px 6px rgba(15,23,42,.05);overflow:hidden}
+.pv-bar{display:flex;align-items:center;gap:16px;white-space:nowrap;overflow:hidden;padding:12px 16px;border-bottom:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--muted)}
+.pv-bar .logo{width:18px;height:18px;border-radius:5px;background:var(--wine)}
+.pv-bar span.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--wine);padding-bottom:4px;margin-bottom:-6px}
+.pv-bar .dot{margin-left:auto;display:flex;align-items:center;gap:6px;font-weight:500}
+.pv-bar .dot::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.preview svg.map{display:block;width:100%;height:auto}
+.map text{font-family:var(--f-body)}
+.pv-note{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;margin:0 16px 16px;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 26px -14px rgba(15,23,42,.35)}
+.pv-note .k{grid-column:1;grid-row:1}
+.pv-note .t{grid-column:1;grid-row:2;margin:0!important}
+.pv-note .tags{grid-column:2;grid-row:1/3;justify-content:flex-end}
+@media (max-width:520px){ .pv-bar{gap:12px} .pv-bar > span:nth-child(4){display:none} .pv-note{grid-template-columns:1fr} .pv-note .tags{grid-column:1;grid-row:3;justify-content:flex-start;margin-top:8px} }
+.pv-note .k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wine)}
+.pv-note .t{font-weight:700;font-size:15px;margin:2px 0 8px;letter-spacing:-.01em}
+.pv-note .tags{display:flex;gap:6px;flex-wrap:wrap}
+.pv-note .tags span{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--raised);border:1px solid var(--line);color:var(--muted)}
+.pv-note .tags span.rev::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#c9960f;margin-right:5px;vertical-align:1px}
+
+/* seções */
+section.block{padding-block:84px}
+section.block.alt{background:var(--surface);border-block:1px solid var(--line)}
+.sec-head{max-width:640px;margin-bottom:40px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin:0 0 10px}
+.sec-head h2{font-size:clamp(26px,3.4vw,36px);line-height:1.15;letter-spacing:-.03em;font-weight:800;margin:0 0 12px}
+.sec-head p{margin:0;color:var(--muted);font-size:16.5px}
+
+/* cadernos */
+.books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.book{display:grid;grid-template-rows:auto auto auto 1fr auto;gap:14px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:16px;transition:border-color .15s,box-shadow .15s}
+.book:hover{border-color:color-mix(in srgb,var(--tone) 45%,var(--line));box-shadow:0 18px 40px -24px color-mix(in srgb,var(--tone) 60%,transparent)}
 .book.estudos{--tone:var(--navy);--tone-soft:var(--navy-soft)}
 .book.teologia{--tone:var(--wine);--tone-soft:var(--wine-soft)}
-.book .kind{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tone)}
-.book h2{font-family:var(--f-text);font-size:24px;font-weight:700;margin:0;letter-spacing:-.02em}
+.book .ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;background:var(--tone-soft);color:var(--tone)}
+.book .ic svg{width:22px;height:22px}
+.book h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
 .book p{margin:0;color:var(--muted)}
-.book ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:14px}
-.book li{display:flex;gap:10px;align-items:baseline}
-.book li::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--tone);flex:none;transform:translateY(-1px)}
-.book .foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line);margin-top:4px}
-.local{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.local b{color:var(--ink);font-weight:600}
-.open{display:inline-flex;align-items:center;gap:8px;background:var(--tone);color:var(--on-accent);text-decoration:none;font-weight:600;padding:10px 18px;border-radius:7px}
-.open:hover{filter:brightness(1.08)}
-.open span{transition:transform .15s}
-.open:hover span{transform:translateX(3px)}
+.book ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px}
+.book li{display:flex;gap:10px;align-items:flex-start}
+.book li svg{width:16px;height:16px;color:var(--tone);flex:none;margin-top:4px}
+.book .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;margin-top:6px;border-top:1px solid var(--line)}
+.book .stat{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.book .stat b{color:var(--ink)}
+.book .go{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--tone);text-decoration:none}
+.book .go svg{width:16px;height:16px;transition:transform .15s}
+.book .go:hover svg{transform:translateX(3px)}
 
-.how{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.how .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;padding-block:36px}
-.how h3{font-size:15px;font-weight:600;margin:0 0 6px}
-.how p{margin:0;color:var(--muted);font-size:14px}
-.how code{font-family:var(--f-mono);font-size:12.5px;background:var(--raised);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+/* recursos */
+.feats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.feat{padding:24px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.feat .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--navy-soft);color:var(--navy);margin-bottom:16px}
+.feat .ic svg{width:20px;height:20px}
+.feat h3{margin:0 0 6px;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.feat p{margin:0;color:var(--muted);font-size:14.5px}
 
-.note{padding-block:28px 48px}
-.note .box{display:flex;gap:16px;align-items:flex-start;background:var(--raised);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
-.note .ic{width:28px;height:28px;border-radius:7px;background:var(--navy-soft);color:var(--navy);display:grid;place-items:center;font-weight:700;flex:none}
-.note h3{margin:0 0 4px;font-size:15px}
-.note p{margin:0;color:var(--muted);font-size:14px;max-width:72ch}
+/* chamada final */
+.final{padding-block:0 84px}
+.final .box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;padding:40px 44px;border-radius:20px;background:var(--navy);color:var(--on-accent);position:relative;overflow:hidden}
+.final .box::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:color-mix(in srgb,var(--on-accent) 8%,transparent);pointer-events:none}
+.final h2{margin:0 0 6px;font-size:clamp(24px,3vw,30px);font-weight:800;letter-spacing:-.03em}
+.final p{margin:0;opacity:.85}
+.final .b-inv{background:var(--on-accent);color:var(--navy);position:relative;z-index:1}
 
-footer{color:var(--muted);font-size:13px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;padding-block:0 32px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:28px}
+footer nav{display:flex;flex-wrap:wrap;gap:20px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
 
-@media (max-width:760px){
-  .books{grid-template-columns:minmax(0,1fr)}
-  .how .wrap{grid-template-columns:minmax(0,1fr);gap:20px}
-  .intro{padding-block:36px 24px}
-  header nav{display:none}
-  header nav + .icon-btn{margin-left:auto}
+@media (max-width:980px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:44px;padding-block:44px 64px}
+  .feats{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:720px){
+  header nav.links{display:none}
+  header.site .wrap{gap:12px}
+  .books{grid-template-columns:minmax(0,1fr)}
+  .feats{grid-template-columns:minmax(0,1fr)}
+  section.block{padding-block:60px}
+  .final{padding-block:0 60px}
+  .final .box{padding:30px 24px}
+  .h-right .b-sm.so-visitante{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 <link rel="stylesheet" href="assets/comum.css">
 </head>
 <body>
-<header>
+<header class="site" id="topo">
   <div class="wrap">
-    <span class="logo" aria-hidden="true"></span><b>Caderno</b>
-    <nav aria-label="Cadernos"><a href="estudos/">Caderno de Estudos</a><a href="teologia/">Caderno de Teologia</a></nav>
-    <div id="account-slot" class="account-slot"></div>
-    <button class="icon-btn" id="theme-btn" type="button" aria-label="Trocar tema"></button>
+    <a class="brand" href="./"><span class="logo" aria-hidden="true"></span>Caderno</a>
+    <nav class="links" aria-label="Seções">
+      <a href="#cadernos">Cadernos</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#privacidade">Privacidade</a>
+    </nav>
+    <div class="h-right">
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Trocar tema"></button>
+      <div id="account-slot" class="account-slot"></div>
+      <a class="b b-pri b-sm so-visitante" href="#" data-auth-open="criar">Criar conta</a>
+    </div>
   </div>
 </header>
 
 <main>
-  <section class="intro wrap">
-    <p class="eyebrow">Notas · Mapa mental · Revisão</p>
-    <h1>Escreva em tópicos e veja seus estudos virarem um mapa</h1>
-    <p class="lead">Escolha o caderno do seu curso. Títulos e tópicos das notas viram ramos do mapa mental, e o painel mostra o que já está dominado e o que precisa de revisão.</p>
-  </section>
-
-  <section class="books wrap" aria-label="Escolha um caderno">
-    <article class="book estudos">
-      <span class="kind">Qualquer curso</span>
-      <h2>Caderno de Estudos</h2>
-      <ul>
-        <li>Notas organizadas por matéria, com etiquetas e busca</li>
-        <li>Mapa mental gerado a partir dos títulos e tópicos</li>
-        <li>Situação de cada nota: a estudar, revisando, dominado</li>
-        <li>Painel com progresso por matéria e fila de revisão</li>
-      </ul>
-      <div class="foot">
-        <span class="local" id="st-estudos">Nenhuma nota neste navegador ainda</span>
-        <a class="open" href="estudos/">Abrir caderno <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-    <article class="book teologia">
-      <span class="kind">Teologia</span>
-      <h2>Caderno de Teologia</h2>
-      <ul>
-        <li>Modelos de exegese, doutrina, fichamento e esboço de sermão</li>
-        <li>Índice automático das passagens bíblicas citadas, em ordem canônica</li>
-        <li>Texto com suporte a grego e hebraico</li>
-        <li>Disciplinas do curso criadas em um clique</li>
-      </ul>
-      <div class="foot">
-        <span class="local" id="st-teologia">Nenhuma nota neste navegador ainda</span>
-        <a class="open" href="teologia/">Abrir caderno <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-  </section>
-
-  <section class="how" aria-label="Como funciona">
+  <section class="hero">
     <div class="wrap">
-      <div><h3>Escreva em tópicos</h3><p>Use <code>#</code> para títulos e <code>-</code> para tópicos. Recue com Tab para criar subtópicos.</p></div>
-      <div><h3>Veja o mapa</h3><p>Cada nota vira um ramo do mapa mental. Clique num ramo para abrir ou fechar e para ir até a nota.</p></div>
-      <div><h3>Acompanhe a revisão</h3><p>Marque cada nota como a estudar, revisando ou dominado. O painel mostra o que está parado há mais tempo.</p></div>
+      <div>
+        <span class="pill"><b>Grátis</b> Para estudantes de qualquer curso e de Teologia</span>
+        <h1>Suas anotações de estudo, organizadas e <em>transformadas em mapas mentais</em></h1>
+        <p class="lead">Escreva em tópicos e o Caderno monta o mapa mental, organiza tudo por matéria e mostra o que ainda precisa de revisão.</p>
+        <div class="cta so-visitante">
+          <a class="b b-pri" href="#" data-auth-open="criar">Criar conta grátis</a>
+          <a class="b b-sec" href="#" data-auth-open="entrar">Já tenho conta</a>
+        </div>
+        <div class="cta so-logado">
+          <a class="b b-pri" href="estudos/">Abrir Caderno de Estudos</a>
+          <a class="b b-sec" href="teologia/">Abrir Caderno de Teologia</a>
+        </div>
+        <ul class="trust">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Só você vê as suas notas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Sincroniza entre aparelhos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Funciona no celular</li>
+        </ul>
+      </div>
+
+      <figure class="preview" aria-label="Prévia do mapa mental de uma nota sobre soteriologia">
+        <div class="pv-bar"><span class="logo" aria-hidden="true"></span><span>Caderno</span><span class="on">Mapa mental</span><span>Painel</span><span class="dot">Sincronizado</span></div>
+        <svg class="map" viewBox="0 0 560 360" role="img" aria-label="Mapa mental com o tema Soteriologia ligado a Justificação, Santificação, Graça e Fé">
+          <g fill="none" stroke-width="1.8" stroke-linecap="round">
+            <path d="M232 180 C200 180 200 96 168 96" stroke="var(--hl-a)"/>
+            <path d="M232 180 C200 180 200 264 168 264" stroke="var(--hl-b)"/>
+            <path d="M328 180 C360 180 360 96 392 96" stroke="var(--hl-c)"/>
+            <path d="M328 180 C360 180 360 264 392 264" stroke="var(--hl-d)"/>
+            <g stroke-width="1.2" opacity=".75">
+              <path d="M78 96 C64 96 64 62 50 62" stroke="var(--hl-a)"/><path d="M78 96 C64 96 64 130 50 130" stroke="var(--hl-a)"/>
+              <path d="M482 96 C496 96 496 62 510 62" stroke="var(--hl-c)"/><path d="M482 96 C496 96 496 130 510 130" stroke="var(--hl-c)"/>
+              <path d="M482 264 C496 264 496 298 510 298" stroke="var(--hl-d)"/>
+            </g>
+          </g>
+          <g font-size="12.5" font-weight="600">
+            <rect x="232" y="160" width="96" height="40" rx="9" fill="var(--wine)"/>
+            <text x="280" y="184.5" text-anchor="middle" fill="var(--on-accent)" font-size="13" font-weight="700">Soteriologia</text>
+            <rect x="78" y="80" width="90" height="32" rx="7" fill="color-mix(in srgb, var(--hl-a) 14%, var(--surface))" stroke="var(--hl-a)"/>
+            <text x="123" y="100.5" text-anchor="middle" fill="var(--ink)">Justificação</text>
+            <rect x="72" y="248" width="96" height="32" rx="7" fill="color-mix(in srgb, var(--hl-b) 14%, var(--surface))" stroke="var(--hl-b)"/>
+            <text x="120" y="268.5" text-anchor="middle" fill="var(--ink)">Santificação</text>
+            <rect x="392" y="80" width="90" height="32" rx="7" fill="color-mix(in srgb, var(--hl-c) 14%, var(--surface))" stroke="var(--hl-c)"/>
+            <text x="437" y="100.5" text-anchor="middle" fill="var(--ink)">Graça</text>
+            <rect x="392" y="248" width="90" height="32" rx="7" fill="color-mix(in srgb, var(--hl-d) 14%, var(--surface))" stroke="var(--hl-d)"/>
+            <text x="437" y="268.5" text-anchor="middle" fill="var(--ink)">Fé</text>
+          </g>
+          <g font-size="11" fill="var(--muted)" font-weight="500">
+            <text x="46" y="58" text-anchor="end">Rm 3:24</text><text x="46" y="134" text-anchor="end">Gl 2:16</text>
+            <text x="514" y="66">Ef 2:8</text><text x="514" y="134">Tt 2:11</text><text x="514" y="302">Hb 11:1</text>
+          </g>
+        </svg>
+        <div class="pv-note" aria-hidden="true">
+          <div class="k">Doutrina</div>
+          <div class="t">Justificação pela fé</div>
+          <div class="tags"><span class="rev">Revisando</span><span>Rm 3:21-26</span><span>soteriologia</span></div>
+        </div>
+      </figure>
     </div>
   </section>
 
-  <section class="note wrap">
-    <div class="box">
-      <span class="ic" aria-hidden="true">i</span>
-      <div>
-        <h3>Onde suas notas ficam</h3>
-        <p>Sem conta, as notas ficam só no próprio navegador. Com uma conta, elas ficam guardadas com segurança e aparecem em todos os aparelhos em que você entrar. Ninguém além de você consegue ver as suas notas. Para não perder nada, ou para levar as notas para outro aparelho, use <b>Exportar backup</b> e <b>Importar</b> no topo de cada caderno.</p>
+  <section class="block alt" id="cadernos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Cadernos</p>
+        <h2>Escolha o caderno do seu curso</h2>
+        <p>Os dois funcionam do mesmo jeito. O de Teologia traz modelos e ferramentas próprias do curso.</p>
+      </div>
+      <div class="books">
+        <article class="book estudos">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/><path d="M9 7.5h6M9 11h4"/></svg></span>
+          <h3>Caderno de Estudos</h3>
+          <p>Para qualquer curso, do ensino médio à faculdade.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Notas por matéria, com etiquetas e busca</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Mapa mental gerado a partir dos tópicos</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Painel de progresso e fila de revisão</li>
+          </ul>
+          <div class="foot">
+            <span class="stat" id="st-estudos"></span>
+            <a class="go" href="estudos/">Abrir caderno <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <article class="book teologia">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 8h10"/></svg></span>
+          <h3>Caderno de Teologia</h3>
+          <p>Feito para as disciplinas do curso de Teologia.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Modelos de exegese, doutrina, fichamento e sermão</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Índice bíblico automático, em ordem canônica</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Texto com grego e hebraico</li>
+          </ul>
+          <div class="foot">
+            <span class="stat" id="st-teologia"></span>
+            <a class="go" href="teologia/">Abrir caderno <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="recursos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Recursos</p>
+        <h2>Tudo o que você precisa para estudar com método</h2>
+        <p>Você escreve do jeito que já anota na aula. O Caderno cuida da organização.</p>
+      </div>
+      <div class="feats">
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><circle cx="4.5" cy="6" r="1.8"/><circle cx="19.5" cy="6" r="1.8"/><circle cx="4.5" cy="18" r="1.8"/><circle cx="19.5" cy="18" r="1.8"/><path d="M9.9 10.6 6 7.2M14.1 10.6 18 7.2M9.9 13.4 6 16.8M14.1 13.4 18 16.8"/></svg></span>
+          <h3>Mapa mental automático</h3>
+          <p>Títulos e tópicos viram ramos. Abra, feche e navegue pelo assunto inteiro.</p>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-8M11 20V5M17 20v-5M3 20h18"/></svg></span>
+          <h3>Revisão com prioridade</h3>
+          <p>Marque cada nota como a estudar, revisando ou dominado e veja o que está parado.</p>
+        </div>
+        <div class="feat">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C6.5 4 9.5 4 12 5.5v14C9.5 18 6.5 18 4 19.5zM20 5.5C17.5 4 14.5 4 12 5.5v14c2.5-1.5 5.5-1.5 8 0z"/></svg></span>
+          <h3>Pronto para Teologia</h3>
+          <p>Modelos de estudo, índice das passagens citadas e suporte a grego e hebraico.</p>
+        </div>
+        <div class="feat" id="privacidade">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>Privado e sincronizado</h3>
+          <p>Cada conta só enxerga as próprias notas, que aparecem em todos os seus aparelhos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <div class="box so-visitante">
+        <div><h2>Comece a organizar seus estudos hoje</h2><p>Crie sua conta em menos de um minuto. É grátis.</p></div>
+        <a class="b b-inv" href="#" data-auth-open="criar">Criar conta grátis</a>
+      </div>
+      <div class="box so-logado">
+        <div><h2>Seus cadernos estão prontos</h2><p>Continue de onde parou, em qualquer aparelho.</p></div>
+        <a class="b b-inv" href="#cadernos">Escolher caderno</a>
       </div>
     </div>
   </section>
@@ -173,8 +342,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
 
 <footer>
   <div class="wrap">
-    <span>Caderno · feito para estudar</span>
-    <a href="https://github.com/samuel-luciano-gomes/caderno-de-estudos">Código no GitHub</a>
+    <span>© 2026 Caderno</span>
+    <nav aria-label="Rodapé"><a href="#cadernos">Cadernos</a><a href="#recursos">Recursos</a><a href="https://github.com/samuel-luciano-gomes/caderno-de-estudos">Código no GitHub</a></nav>
   </div>
 </footer>
 
@@ -189,18 +358,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   }
   function show(key, id, unit){
     var el=document.getElementById(id), d=null;
-    el.textContent='Nenhuma nota neste navegador ainda';
+    el.textContent='';
+    if (document.documentElement.getAttribute('data-auth')!=='in') return;
     try{ d=JSON.parse(localStorage.getItem(key)||'null'); }catch(e){ return; }
-    if (!d || !Array.isArray(d.notes) || !d.notes.length) return;
+    if (!d || !Array.isArray(d.notes) || !d.notes.length){ el.textContent='Nenhuma nota ainda'; return; }
     var n=d.notes.length, s=(d.subjects||[]).length, last=0;
     d.notes.forEach(function(x){ if ((x.updated||0)>last) last=x.updated; });
-    el.textContent='';
     var b=document.createElement('b'); b.textContent=n+' '+(n===1?'nota':'notas');
-    el.append('Neste navegador: ', b, ' em '+s+' '+(s===1?unit[0]:unit[1])+(last?', editado '+ago(last):''));
+    el.append(b, ' em '+s+' '+(s===1?unit[0]:unit[1])+(last?' · editado '+ago(last):''));
   }
   function all(){ show('caderno-estudos-v1','st-estudos',['matéria','matérias']); show('caderno-teologia-v1','st-teologia',['disciplina','disciplinas']); }
   all();
   document.addEventListener('caderno:dados', all);
+  new MutationObserver(all).observe(document.documentElement,{attributes:true,attributeFilter:['data-auth']});
+  var h=document.getElementById('topo');
+  var onScroll=function(){ h.classList.toggle('scrolled', window.scrollY>8); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();
 </script>
 </body>
