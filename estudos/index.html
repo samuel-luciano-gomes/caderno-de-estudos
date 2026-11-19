@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="../assets/tema.js"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231e3a5f%22%2F%3E%3Crect%20x%3D%2215%22%20y%3D%227%22%20width%3D%222.6%22%20height%3D%2218%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%2211.5%22%20width%3D%2212%22%20height%3D%222.6%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Caderno de Estudos</title>
@@ -49,19 +50,6 @@ button{cursor:pointer}
 
 /* cabeçalho */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
-.top-in{display:flex;align-items:stretch;gap:8px 32px;flex-wrap:wrap;min-height:56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand .logo{width:22px;height:22px;border-radius:5px;background:var(--accent);display:grid;place-items:center;flex:none}
-.brand .logo::after{content:"";width:10px;height:10px;border:2px solid var(--accent-ink);border-radius:2px;border-right-color:transparent}
-.brand h1{font-family:var(--f-display);font-size:15px;font-weight:600;margin:0;white-space:nowrap}
-.brand .mono{color:var(--muted);padding-left:10px;border-left:1px solid var(--line)}
-.tabs{display:flex;gap:20px;align-self:stretch}
-.tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:0 2px;border-radius:0;font-weight:500;color:var(--muted)}
-.tabs button:hover{color:var(--ink)}
-.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
-.save{align-self:center}
-.backup{display:flex;gap:2px;align-self:center;flex-wrap:wrap}
-.backup .btn{font-weight:500;font-size:13px;text-decoration:none;cursor:pointer}
 .save{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--muted)}
 .save i{width:8px;height:8px;border-radius:50%;background:var(--st-dominado);display:inline-block}
 .save[data-s="saving"] i{background:var(--st-revisando)}
@@ -244,18 +232,32 @@ textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1p
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="../assets/comum.css">
 </head>
 <body>
 <header class="top">
   <div class="top-in">
-    <div class="brand"><span class="logo" aria-hidden="true"></span><h1>Caderno de Estudos</h1><span class="mono" id="count"></span></div>
+    <a class="brand" href="../" title="Página inicial"><span class="logo" aria-hidden="true"></span><span class="bt">Caderno de Estudos</span></a>
+    <nav class="switch" aria-label="Trocar de caderno"><a href="../estudos/" aria-current="page">Estudos</a><a href="../teologia/">Teologia</a></nav>
     <nav class="tabs" role="tablist" aria-label="Seções">
-      <button role="tab" id="tab-caderno" data-v="caderno">Caderno</button>
-      <button role="tab" id="tab-mapa" data-v="mapa">Mapa mental</button>
-      <button role="tab" id="tab-painel" data-v="painel">Painel</button>
+      <button role="tab" id="tab-caderno" data-v="caderno"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/><path d="M9 7.5h6M9 11h4"/></svg>Caderno</button>
+      <button role="tab" id="tab-mapa" data-v="mapa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.6"/><circle cx="4.5" cy="6" r="1.8"/><circle cx="19.5" cy="6" r="1.8"/><circle cx="4.5" cy="18" r="1.8"/><circle cx="19.5" cy="18" r="1.8"/><path d="M9.9 10.6 6 7.2M14.1 10.6 18 7.2M9.9 13.4 6 16.8M14.1 13.4 18 16.8"/></svg>Mapa mental</button>
+      <button role="tab" id="tab-painel" data-v="painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-8M11 20V5M17 20v-5M3 20h18"/></svg>Painel</button>
     </nav>
-    <div class="save mono" id="save" data-s="loading"><i></i><span>Abrindo seu caderno…</span></div>
-    <div class="backup"><a class="btn ghost" href="../">Início</a><a class="btn ghost" href="../teologia/">Caderno de Teologia</a><button class="btn ghost" id="exp">Exportar backup</button><label class="btn ghost" for="imp">Importar<input type="file" id="imp" accept=".json,application/json" hidden></label></div>
+    <div class="top-right">
+      <span class="mono count" id="count"></span>
+      <div class="save mono" id="save" data-s="loading"><i></i><span>Abrindo seu caderno…</span></div>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Trocar tema"></button>
+      <div class="more-wrap">
+        <button class="icon-btn" id="more-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Mais opções" title="Mais opções"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></button>
+        <div class="top-menu" id="more-menu" role="menu" hidden>
+          <button role="menuitem" type="button" id="exp">Exportar backup<span>Baixa um arquivo com todas as suas notas</span></button>
+          <label role="menuitem" for="imp">Importar backup<span>Junta as notas de um arquivo exportado</span><input type="file" id="imp" accept=".json,application/json" hidden></label>
+          <hr>
+          <a role="menuitem" href="../">Página inicial<span>Escolher outro caderno</span></a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -640,6 +642,7 @@ $('#search').addEventListener('input', e=>{ S.q=e.target.value; renderList(); })
 $('#new-note').addEventListener('click', newNote);
 
 let edId=null;
+const prop=(label,el)=>[h('dt',{text:label}), h('dd',{},el)];
 function welcome(){
   if (!S.loaded) return h('div',{class:'welcome'}, h('p',{text:'Carregando…'}));
   if (S.notes.size) return h('div',{class:'welcome'}, h('h2',{text:'Escolha uma nota'}), h('p',{text:'Selecione uma nota na lista ou crie uma nova. Tudo o que você escrever vira ramo no mapa mental.'}), h('div',{class:'acts'}, h('button',{class:'btn pri',onclick:newNote},'Nova nota'), h('button',{class:'btn',onclick:()=>setView('mapa')},'Ver mapa mental')));
@@ -669,7 +672,7 @@ function renderEditor(remote){
   subj.value=n.subject||'';
   subj.addEventListener('change', ()=>{ n.subject=subj.value||null; touch(n); render(); });
   const seg=h('div',{class:'seg', id:'ed-status', role:'group','aria-label':'Situação do estudo'}, STATUS.map(([k,l])=>h('button',{'data-k':k, 'aria-pressed':String(n.status===k), onclick:()=>{ n.status=k; touch(n); renderList(); syncEditorBits(n); }}, h('i',{style:`background:var(--st-${k})`}), l)));
-  const tags=h('input',{class:'txt tags', id:'ed-tags', placeholder:'Etiquetas, separadas por vírgula (ex.: enem, prova 2)', value:(n.tags||[]).join(', '), 'aria-label':'Etiquetas'});
+  const tags=h('input',{class:'txt tags', id:'ed-tags', placeholder:'Separe por vírgula (ex.: enem, prova 2)', value:(n.tags||[]).join(', '), 'aria-label':'Etiquetas'});
   tags.addEventListener('input', ()=>{ n.tags=tags.value.split(',').map(t=>t.trim().replace(/^#/,'')).filter(Boolean); touch(n); renderList(); });
   const body=h('textarea',{class:'body', id:'ed-body', spellcheck:'true', 'aria-label':'Conteúdo da nota', placeholder:'# Tema\n## Subtema\n- Tópico\n  - Detalhe do tópico'});
   body.value=n.body||'';
@@ -683,7 +686,7 @@ function renderEditor(remote){
   box.replaceChildren(
     title,
     mat ? h('div',{class:'from-mat'}, 'Gerada do PDF “'+mat.name+'”', h('button',{onclick:()=>{ S.selMat=mat.id; setView('materiais'); }}, 'Abrir material')) : '',
-    h('div',{class:'ed-meta'}, subj, seg, tags),
+    h('dl',{class:'props'}, prop('Matéria',subj), prop('Situação',seg), prop('Etiquetas',tags)),
     h('div',{class:'toolbar'}, tb('Título','# ','Linha vira um ramo principal (#)'), tb('Subtítulo','## ','Linha vira um sub-ramo (##)'), tb('Tópico','- ','Linha vira um tópico (-)'), tb('Subtópico','  - ','Tópico dentro de outro tópico'), h('span',{class:'sp'}), h('span',{class:'hint mono', id:'ed-count'})),
     body,
     h('div',{class:'ed-foot'}, h('span',{class:'hint', id:'ed-upd'}), h('button',{class:'btn', onclick:()=>{ S.scope='n:'+n.id; S.collapsed.clear(); S.mapSel=null; needFit=true; setView('mapa'); }},'Ver mapa desta nota'), del));

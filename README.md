@@ -4,6 +4,7 @@ Bloco de notas para estudos que transforma títulos e tópicos em mapa mental e 
 
 - `index.html`: página inicial, com a escolha do caderno
 - `estudos/`: Caderno de Estudos geral
+- `assets/comum.css` e `assets/tema.js`: cabeçalho, menus e tema claro, escuro ou do sistema, usados pelas três páginas
 - `teologia/`: Caderno de Teologia, com modelos de exegese, doutrina, fichamento e sermão, e índice automático de passagens bíblicas
 
 As notas ficam guardadas no navegador de quem usa (localStorage). Use **Exportar backup** e **Importar** para salvar ou levar as notas para outro aparelho.

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="assets/tema.js"></script>
 <title>Caderno</title>
 <meta name="description" content="Cadernos de estudo com notas em tópicos, mapa mental automático e organização por matéria. Inclui uma versão para estudantes de Teologia.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231e3a5f%22%2F%3E%3Cpath%20d%3D%22M10%209h12M10%2016h8M10%2023h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
@@ -17,14 +18,20 @@
   --f-body:"Inter","Segoe UI",system-ui,sans-serif;
   --f-text:"Source Serif 4",Georgia,"Times New Roman",serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --accent:var(--navy); --accent-ink:var(--on-accent);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
-  :root{
+  :root:not([data-theme="light"]){
     --bg:#0e1014; --surface:#15181d; --raised:#1a1e24; --ink:#e6e8eb; --muted:#9aa1ac; --line:#2a2f37;
     --navy:#8fb0dc; --navy-soft:#1c2430; --wine:#e2a3b0; --wine-soft:#2a1d22; --on-accent:#0e1014;
     color-scheme:dark;
   }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1014; --surface:#15181d; --raised:#1a1e24; --ink:#e6e8eb; --muted:#9aa1ac; --line:#2a2f37;
+  --navy:#8fb0dc; --navy-soft:#1c2430; --wine:#e2a3b0; --wine-soft:#2a1d22; --on-accent:#0e1014;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -38,9 +45,11 @@ header .wrap{display:flex;align-items:center;gap:12px;min-height:60px}
 .logo{width:24px;height:24px;border-radius:6px;background:var(--navy);display:grid;place-items:center;flex:none}
 .logo::after{content:"";width:12px;height:10px;background:linear-gradient(var(--on-accent),var(--on-accent)) 0 0/100% 2px no-repeat,linear-gradient(var(--on-accent),var(--on-accent)) 0 50%/70% 2px no-repeat,linear-gradient(var(--on-accent),var(--on-accent)) 0 100%/85% 2px no-repeat}
 header b{font-size:16px;font-weight:600}
-header nav{margin-left:auto;display:flex;gap:18px;font-size:14px}
+header nav{margin-left:auto;display:flex;gap:18px;font-size:14px;margin-right:6px}
 header nav a{text-decoration:none;color:var(--muted)}
 header nav a:hover{color:var(--ink)}
+header .icon-btn{margin-left:auto}
+header nav + .icon-btn{margin-left:0}
 
 .intro{padding-block:56px 32px}
 .eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
@@ -86,15 +95,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   .how .wrap{grid-template-columns:minmax(0,1fr);gap:20px}
   .intro{padding-block:36px 24px}
   header nav{display:none}
+  header nav + .icon-btn{margin-left:auto}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="assets/comum.css">
 </head>
 <body>
 <header>
   <div class="wrap">
     <span class="logo" aria-hidden="true"></span><b>Caderno</b>
     <nav aria-label="Cadernos"><a href="estudos/">Caderno de Estudos</a><a href="teologia/">Caderno de Teologia</a></nav>
+    <button class="icon-btn" id="theme-btn" type="button" aria-label="Trocar tema"></button>
   </div>
 </header>
 

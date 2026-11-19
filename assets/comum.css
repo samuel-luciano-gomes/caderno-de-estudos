@@ -1,0 +1,60 @@
+/* Componentes compartilhados: cabeçalho, botões de ícone, menus e propriedades da nota.
+   Usa os tokens de cor definidos em cada página (--accent, --surface, --line...). */
+
+/* cabeçalho */
+.top-in{display:flex;align-items:center;gap:8px 18px;min-height:56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;flex:none}
+.brand .bt{font-weight:600;font-size:15px;letter-spacing:-.005em}
+.logo{width:24px;height:24px;border-radius:6px;background:var(--accent);display:grid;place-items:center;flex:none}
+.logo::after{content:"";width:12px;height:10px;background:linear-gradient(var(--accent-ink),var(--accent-ink)) 0 0/100% 2px no-repeat,linear-gradient(var(--accent-ink),var(--accent-ink)) 0 50%/70% 2px no-repeat,linear-gradient(var(--accent-ink),var(--accent-ink)) 0 100%/85% 2px no-repeat}
+.teologia .logo::after{width:10px;height:13px;background:linear-gradient(var(--accent-ink),var(--accent-ink)) 50% 0/2px 100% no-repeat,linear-gradient(var(--accent-ink),var(--accent-ink)) 50% 32%/100% 2px no-repeat}
+
+.switch{display:inline-flex;gap:2px;padding:3px;background:var(--raised);border:1px solid var(--line);border-radius:8px;flex:none}
+.switch a{padding:4px 12px;border-radius:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;white-space:nowrap}
+.switch a:hover{color:var(--ink)}
+.switch a[aria-current="page"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+
+.tabs{display:flex;gap:2px;align-self:stretch;margin-left:6px}
+.tabs button{display:inline-flex;align-items:center;gap:7px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;padding:0 10px;font-weight:500;color:var(--muted);white-space:nowrap}
+.tabs button svg{width:16px;height:16px;flex:none}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--accent)}
+
+.top-right{margin-left:auto;display:flex;align-items:center;gap:4px;min-width:0}
+.top-right .count{color:var(--muted);white-space:nowrap;padding-right:12px;margin-right:6px;border-right:1px solid var(--line)}
+.save{margin-left:0;padding-right:6px;white-space:nowrap}
+
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;flex:none;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer}
+.icon-btn:hover,.icon-btn[aria-expanded="true"]{background:var(--raised);border-color:var(--line);color:var(--ink)}
+.icon-btn svg{width:18px;height:18px}
+
+.more-wrap{position:relative}
+.top-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:8;width:270px;max-width:calc(100vw - 32px);display:grid;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.16)}
+.top-menu > a,.top-menu > button,.top-menu > label{font:inherit;display:grid;gap:1px;text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:5px;color:var(--ink);font-weight:500;text-decoration:none;cursor:pointer}
+.top-menu > a:hover,.top-menu > button:hover,.top-menu > label:hover,.top-menu > :focus-visible{background:var(--raised)}
+.top-menu span{color:var(--muted);font-size:12.5px;font-weight:400}
+.top-menu hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
+
+/* lista de notas: título longo não empurra a coluna */
+.list-head{grid-template-columns:minmax(0,1fr)}
+.list-head .t > :last-child{flex:none}
+
+/* propriedades da nota */
+.props{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 14px;align-items:center;margin:14px 0 18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.props dt{color:var(--muted);font-size:13px}
+.props dd{margin:0;min-width:0}
+.props select{width:auto;max-width:100%;text-overflow:ellipsis}
+.props .seg{flex-wrap:wrap}
+
+@media (max-width:1180px){ .top-right .count{display:none} }
+@media (max-width:900px){
+  .top-in{flex-wrap:wrap;padding-top:8px}
+  .tabs{order:5;width:100%;margin-left:0;border-top:1px solid var(--line)}
+  .tabs button{flex:1;justify-content:center;padding:11px 6px}
+}
+@media (max-width:560px){
+  .brand .bt{display:none}
+  .save span{display:none}
+  .props{grid-template-columns:minmax(0,1fr);gap:4px}
+  .props dd{margin-bottom:8px}
+}
