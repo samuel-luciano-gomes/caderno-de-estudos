@@ -57,6 +57,39 @@
 .btn.danger{background:var(--danger);border-color:var(--danger);color:var(--surface)}
 .btn.danger:hover{filter:brightness(1.08)}
 
+/* conta */
+.account-slot{display:flex;align-items:center}
+.btn-entrar{font:inherit;font-size:13px;font-weight:600;padding:6px 14px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn-entrar:hover{border-color:var(--accent);color:var(--accent)}
+.avatar{width:32px;height:32px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.avatar:hover,.avatar[aria-expanded="true"]{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.conta-info{display:grid;gap:2px;padding:8px 10px 6px}
+.conta-info b{font-size:12px;font-weight:600;color:var(--muted)}
+.conta-info span{color:var(--ink)!important;font-size:13.5px!important;overflow-wrap:anywhere}
+
+dialog.auth{width:min(420px,calc(100vw - 32px));padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.28)}
+dialog.auth::backdrop{background:rgba(10,12,16,.45);backdrop-filter:blur(2px)}
+dialog.auth form{display:grid;gap:14px;padding:26px 26px 22px}
+dialog.auth h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.01em}
+.auth-sub{margin:-8px 0 0;color:var(--muted);font-size:14px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;padding:3px;gap:3px;background:var(--raised);border:1px solid var(--line);border-radius:8px}
+.auth-tabs button{font:inherit;font-size:13.5px;font-weight:500;border:0;border-radius:6px;padding:7px;background:transparent;color:var(--muted);cursor:pointer}
+.auth-tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--line)}
+.auth-field{display:grid;gap:6px;font-size:13px;font-weight:600}
+.auth-field input{font:inherit;font-size:15px;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.auth-field input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.auth-link{justify-self:start;margin-top:-6px;border:0;background:transparent;padding:0;font:inherit;font-size:13px;color:var(--accent);cursor:pointer}
+.auth-msg{margin:0;font-size:13.5px;min-height:1.2em}
+.auth-msg[data-kind="erro"]{color:var(--danger)}
+.auth-msg[data-kind="ok"]{color:var(--st-dominado,#36845a)}
+.auth-acts{display:flex;justify-content:flex-end;gap:8px}
+dialog.auth .btn{font:inherit;font-weight:600;padding:9px 16px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);cursor:pointer}
+dialog.auth .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+dialog.auth .btn.ghost{border-color:transparent;background:transparent;color:var(--muted)}
+dialog.auth .btn:disabled{opacity:.6;cursor:wait}
+.auth-msg[data-kind="erro"]{color:var(--danger,#b42318)}
+dialog.auth [hidden]{display:none!important}
+
 /* propriedades da nota */
 .props{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 14px;align-items:center;margin:14px 0 18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .props dt{color:var(--muted);font-size:13px}
@@ -65,6 +98,7 @@
 .props .seg{flex-wrap:wrap}
 
 @media (max-width:1180px){ .top-right .count{display:none} }
+@media (max-width:1040px){ .save span{display:none} .save{padding:0 4px} }
 @media (max-width:900px){
   .top-in{flex-wrap:wrap;padding-top:8px}
   .tabs{order:5;width:100%;margin-left:0;border-top:1px solid var(--line)}

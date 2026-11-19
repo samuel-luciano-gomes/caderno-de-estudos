@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="assets/tema.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>
+<script defer src="assets/config.js"></script>
+<script defer src="assets/conta.js"></script>
 <title>Caderno</title>
 <meta name="description" content="Cadernos de estudo com notas em tópicos, mapa mental automático e organização por matéria. Inclui uma versão para estudantes de Teologia.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231e3a5f%22%2F%3E%3Cpath%20d%3D%22M10%209h12M10%2016h8M10%2023h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
@@ -106,6 +109,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   <div class="wrap">
     <span class="logo" aria-hidden="true"></span><b>Caderno</b>
     <nav aria-label="Cadernos"><a href="estudos/">Caderno de Estudos</a><a href="teologia/">Caderno de Teologia</a></nav>
+    <div id="account-slot" class="account-slot"></div>
     <button class="icon-btn" id="theme-btn" type="button" aria-label="Trocar tema"></button>
   </div>
 </header>
@@ -160,8 +164,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
     <div class="box">
       <span class="ic" aria-hidden="true">i</span>
       <div>
-        <h3>Suas notas ficam neste navegador</h3>
-        <p>Não é preciso criar conta. As notas são salvas no próprio navegador e não são enviadas para nenhum servidor. Para não perder nada, ou para levar as notas para outro aparelho, use <b>Exportar backup</b> e <b>Importar</b> no topo de cada caderno.</p>
+        <h3>Onde suas notas ficam</h3>
+        <p>Sem conta, as notas ficam só no próprio navegador. Com uma conta, elas ficam guardadas com segurança e aparecem em todos os aparelhos em que você entrar. Ninguém além de você consegue ver as suas notas. Para não perder nada, ou para levar as notas para outro aparelho, use <b>Exportar backup</b> e <b>Importar</b> no topo de cada caderno.</p>
       </div>
     </div>
   </section>
@@ -185,6 +189,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
   }
   function show(key, id, unit){
     var el=document.getElementById(id), d=null;
+    el.textContent='Nenhuma nota neste navegador ainda';
     try{ d=JSON.parse(localStorage.getItem(key)||'null'); }catch(e){ return; }
     if (!d || !Array.isArray(d.notes) || !d.notes.length) return;
     var n=d.notes.length, s=(d.subjects||[]).length, last=0;
@@ -193,8 +198,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-betw
     var b=document.createElement('b'); b.textContent=n+' '+(n===1?'nota':'notas');
     el.append('Neste navegador: ', b, ' em '+s+' '+(s===1?unit[0]:unit[1])+(last?', editado '+ago(last):''));
   }
-  show('caderno-estudos-v1','st-estudos',['matéria','matérias']);
-  show('caderno-teologia-v1','st-teologia',['disciplina','disciplinas']);
+  function all(){ show('caderno-estudos-v1','st-estudos',['matéria','matérias']); show('caderno-teologia-v1','st-teologia',['disciplina','disciplinas']); }
+  all();
+  document.addEventListener('caderno:dados', all);
 })();
 </script>
 </body>
