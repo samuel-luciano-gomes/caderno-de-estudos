@@ -9,7 +9,7 @@
 <title>Caderno de Estudos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: barra superior com abas sublinhadas; Caderno em três colunas (matérias · notas · editor); Mapa mental e Painel ocupam a largura toda.
    Visual sóbrio: neutros frios, azul-marinho como destaque, cores de matéria dessaturadas. */
@@ -18,9 +18,9 @@
   --accent:#1e3a5f; --accent-ink:#ffffff; --soft:#edf1f6; --danger:#b42318;
   --hl0:#a8862c; --hl1:#9d5874; --hl2:#3d8564; --hl3:#3a6aa3; --hl4:#ad6638; --hl5:#665b9e;
   --st-estudar:#c0573a; --st-revisando:#b58622; --st-dominado:#36845a;
-  --f-display:"Inter","Segoe UI",system-ui,sans-serif;
-  --f-body:"Inter","Segoe UI",system-ui,sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --f-display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
   --f-text:var(--f-body);
   --r:6px;
 }
@@ -46,7 +46,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.02em}
+.mono{font-family:var(--f-mono);font-size:12.5px;font-variant-numeric:tabular-nums}
 
 /* cabeçalho */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
@@ -64,7 +64,7 @@ main{padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px)
 .notebook{display:grid;grid-template-columns:232px 300px minmax(0,1fr);gap:16px;align-items:start}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
 .side{padding:14px 10px}
-.label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 6px 8px}
+.label{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:0 6px 8px}
 .subj{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;text-align:left;padding:7px 8px;border-radius:6px;font-weight:500}
 .subj:hover{background:var(--raised)}
 .subj[aria-current="true"]{background:var(--soft);font-weight:700}
@@ -104,7 +104,7 @@ input.txt,select.txt{width:100%;border:1px solid var(--line);background:var(--su
 .pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:1px 7px;border-radius:4px;background:var(--raised);border:1px solid var(--line);white-space:nowrap}
 .pill i{width:7px;height:7px;border-radius:50%;display:inline-block}
 .pill.estudar i{background:var(--st-estudar)} .pill.revisando i{background:var(--st-revisando)} .pill.dominado i{background:var(--st-dominado)}
-.tag{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.tag{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .empty-list{padding:24px 14px;color:var(--muted);text-align:center}
 
 .editor{padding:20px 24px 24px;min-height:420px}
@@ -122,7 +122,7 @@ input.txt,select.txt{width:100%;border:1px solid var(--line);background:var(--su
 .toolbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border:1px solid var(--line);border-bottom:0;border-radius:6px 8px 0 0;background:var(--raised)}
 .toolbar .btn{padding:4px 10px;font-size:13px}
 .toolbar .sp{flex:1}
-textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1px solid var(--line);border-radius:0 0 8px 8px;background:var(--surface);padding:14px 16px;line-height:1.75;font-family:var(--f-mono);font-size:14px;tab-size:2}
+textarea.body{display:block;width:100%;min-height:52vh;resize:vertical;border:1px solid var(--line);border-radius:0 0 8px 8px;background:var(--surface);padding:14px 16px;line-height:1.75;font-family:var(--f-text);font-size:15.5px;tab-size:2}
 .ed-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
 .ed-foot .hint{flex:1;min-width:200px}
 .welcome{max-width:520px;margin:40px auto;text-align:center;display:grid;gap:14px;justify-items:center}
@@ -578,6 +578,7 @@ function render(remote){
 function swatches(cur, onPick){
   return h('div',{class:'swatches'}, [0,1,2,3,4,5].map(c=>h('button',{style:`background:${hl(c)}`, 'aria-label':'Cor '+(c+1), 'aria-pressed':String(cur===c), onclick:()=>onPick(c)})));
 }
+function ico(svg){ const el=document.createElement('span'); el.className='ico'; el.innerHTML=svg; return el; }
 function renderSide(){
   const side=$('#side'); const all=[...S.notes.values()];
   const cnt = id => all.filter(n => id==='all' ? true : id==='none' ? !subjOf(n.subject) : n.subject===id).length;
@@ -585,13 +586,30 @@ function renderSide(){
     h('span',{class:'dot', style: color==null ? 'background:var(--line)' : `background:${hl(color)}`}), h('span',{class:'nm',text:name}), h('span',{class:'ct',text:cnt(id)}));
   const kids=[h('div',{class:'label',text:'Matérias'}), btn('all','Todas as notas',null)];
   for (const s of S.subjects){
+    const usedHere=cnt(s.id);
+    const removeNow=()=>{
+      S.subjects=S.subjects.filter(x=>x!==s);
+      for (const n of all) if (n.subject===s.id){ n.subject=null; touch(n); }
+      if (S.sel===s.id) S.sel='all';
+      S.editSubj=null; S.delSubj=null; persist('meta'); render();
+    };
+    if (S.delSubj===s.id){
+      kids.push(h('div',{class:'subj-del', role:'alert'},
+        h('p',{}, 'Remover ', h('b',{text:s.name}), '?', usedHere ? ` ${usedHere} ${usedHere>1?'notas vão':'nota vai'} para “Sem matéria”.` : ' Ela não tem notas.'),
+        h('div',{class:'acts'},
+          h('button',{class:'btn danger', id:'del-subj-ok', onclick:removeNow}, 'Remover'),
+          h('button',{class:'btn ghost', onclick:()=>{ S.delSubj=null; renderSide(); }}, 'Cancelar'))));
+      continue;
+    }
     kids.push(h('div',{class:'row'}, btn(s.id, s.name, s.color),
-      h('button',{class:'more','aria-label':'Editar '+s.name, title:'Editar matéria', onclick:()=>{ S.editSubj = S.editSubj===s.id?null:s.id; renderSide(); }}, '⋯')));
+      h('span',{class:'row-acts'},
+        h('button',{class:'row-act', 'aria-label':'Editar '+s.name, title:'Renomear ou mudar a cor', onclick:()=>{ S.delSubj=null; S.editSubj = S.editSubj===s.id?null:s.id; renderSide(); }}, ico("<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z\"/><path d=\"m13.5 6.5 4 4\"/></svg>")),
+        h('button',{class:'row-act del', 'aria-label':'Remover '+s.name, title:'Remover matéria', onclick:()=>{ S.editSubj=null; S.delSubj=s.id; renderSide(); const ok=document.getElementById('del-subj-ok'); if (ok) ok.focus(); }}, ico("<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5\"/></svg>")))));
     if (S.editSubj===s.id){
       const inp=h('input',{class:'txt', id:'edit-subj-name', value:s.name, 'aria-label':'Nome da matéria'});
       inp.addEventListener('change', ()=>{ const v=inp.value.trim(); if (v){ s.name=v; persist('meta'); render(); } });
       const used=cnt(s.id);
-      const del = h('button',{class:'btn warn'}, 'Excluir matéria');
+      const del = h('button',{class:'btn warn'}, 'Remover matéria');
       armed(del, used ? `Excluir e mover ${used} ${used>1?'notas':'nota'} para “Sem matéria”` : 'Confirmar exclusão', ()=>{
         S.subjects=S.subjects.filter(x=>x!==s);
         for (const n of all) if (n.subject===s.id){ n.subject=null; touch(n); }
@@ -663,6 +681,12 @@ function renderEditor(remote){
       for (const [id,v] of Object.entries(map)){ const el=document.getElementById(id); if (el && document.activeElement!==el && el.value!==v) el.value=v; }
       const sel=$('#ed-subj'); if (sel && document.activeElement!==sel) sel.value=n.subject||'';
     }
+    const sel=$('#ed-subj');
+    if (sel && document.activeElement!==sel){
+      const key=S.subjects.map(x=>x.id+':'+x.name).join('|');
+      if (sel.dataset.k!==key){ sel.replaceChildren(h('option',{value:''},'Sem matéria'), ...S.subjects.map(x=>h('option',{value:x.id},x.name))); sel.dataset.k=key; }
+      sel.value=subjOf(n.subject) ? n.subject : '';
+    }
     syncEditorBits(n); return;
   }
   edId=n.id;
@@ -726,7 +750,7 @@ function editorKeys(e, ta, done){
 
 /* ---------- mapa mental ---------- */
 const KIND={ root:{fs:15,fw:600,h:40,px:18}, subject:{fs:13.5,fw:600,h:32,px:14}, note:{fs:13,fw:500,h:30,px:13}, h:{fs:12.5,fw:500,h:26,px:11}, item:{fs:12,fw:400,h:24,px:10} };
-const MAPFONT='Inter, "Segoe UI", system-ui, sans-serif';
+const MAPFONT='"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif';
 const mctx=document.createElement('canvas').getContext('2d');
 const tw=(t,k)=>{ mctx.font=`${k.fw} ${k.fs}px ${MAPFONT}`; return mctx.measureText(t).width; };
 const trunc=(t,n)=>t.length>n ? t.slice(0,n-1)+'…' : t;
@@ -843,7 +867,7 @@ function renderMap(){
     if (n.children.length && S.collapsed.has(n.id)){
       const bx = n.dir>0 ? n.w+14 : -14;
       g.append(sv('rect',{x:bx-12, y:n.h/2-9, width:24, height:18, rx:4, fill:'var(--surface)', stroke:'var(--line)', 'stroke-width':1}));
-      const b=sv('text',{x:bx, y:n.h/2, 'text-anchor':'middle','dominant-baseline':'central','font-family':'"IBM Plex Mono", monospace','font-size':10,'font-weight':500, fill:'var(--ink)'});
+      const b=sv('text',{x:bx, y:n.h/2, 'text-anchor':'middle','dominant-baseline':'central','font-family':MAPFONT,'font-size':10,'font-weight':500, fill:'var(--ink)'});
       b.textContent='+'+Math.min(99,countDesc(n)); g.append(b);
     }
     gN.append(g);

@@ -9,15 +9,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231e3a5f%22%2F%3E%3Cpath%20d%3D%22M10%209h12M10%2016h8M10%2023h10%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: cabeçalho simples, abertura curta, os dois cadernos lado a lado como escolha principal, e uma faixa explicando como o site guarda as notas. */
 :root{
   --bg:#f4f5f7; --surface:#ffffff; --raised:#f8f9fb; --ink:#111827; --muted:#667085; --line:#e2e5ea;
   --navy:#1e3a5f; --navy-soft:#edf1f6; --wine:#6e1f30; --wine-soft:#f4ecee; --on-accent:#ffffff;
-  --f-body:"Inter","Segoe UI",system-ui,sans-serif;
-  --f-text:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --f-body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-text:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
   --accent:var(--navy); --accent-ink:var(--on-accent);
   color-scheme:light;
 }
@@ -53,7 +53,7 @@ header nav + .icon-btn{margin-left:0}
 
 .intro{padding-block:56px 32px}
 .eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
-h1{font-family:var(--f-text);font-weight:600;font-size:clamp(30px,4.6vw,44px);line-height:1.12;letter-spacing:-.015em;margin:0 0 14px;max-width:20ch;text-wrap:balance}
+h1{font-family:var(--f-text);font-weight:700;font-size:clamp(30px,4.6vw,44px);line-height:1.12;letter-spacing:-.03em;margin:0 0 14px;max-width:20ch;text-wrap:balance}
 .intro p.lead{font-size:17px;color:var(--muted);max-width:58ch;margin:0}
 
 .books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-bottom:48px}
@@ -62,7 +62,7 @@ h1{font-family:var(--f-text);font-weight:600;font-size:clamp(30px,4.6vw,44px);li
 .book.estudos{--tone:var(--navy);--tone-soft:var(--navy-soft)}
 .book.teologia{--tone:var(--wine);--tone-soft:var(--wine-soft)}
 .book .kind{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tone)}
-.book h2{font-family:var(--f-text);font-size:26px;font-weight:600;margin:0;letter-spacing:-.01em}
+.book h2{font-family:var(--f-text);font-size:24px;font-weight:700;margin:0;letter-spacing:-.02em}
 .book p{margin:0;color:var(--muted)}
 .book ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:14px}
 .book li{display:flex;gap:10px;align-items:baseline}

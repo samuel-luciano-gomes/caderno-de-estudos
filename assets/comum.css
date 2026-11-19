@@ -39,6 +39,24 @@
 .list-head{grid-template-columns:minmax(0,1fr)}
 .list-head .t > :last-child{flex:none}
 
+/* ações de cada disciplina: aparecem ao passar o mouse; em telas de toque ficam sempre visíveis */
+.row{position:relative}
+.row-acts{position:absolute;right:2px;top:50%;transform:translateY(-50%);display:flex;gap:2px;padding-left:10px;opacity:0;pointer-events:none;background:linear-gradient(to right,transparent,var(--raised) 10px)}
+.row:hover .row-acts,.row:focus-within .row-acts{opacity:1;pointer-events:auto}
+.row .subj[aria-current="true"] + .row-acts{background:linear-gradient(to right,transparent,var(--soft) 10px)}
+.row-act{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:6px;background:transparent;color:var(--muted);cursor:pointer}
+.row-act:hover{background:var(--surface);color:var(--ink)}
+.row-act.del:hover{color:var(--danger)}
+.row-act .ico,.row-act svg{display:grid;width:15px;height:15px}
+@media (hover:none){
+  .row-acts{position:static;transform:none;opacity:1;pointer-events:auto;background:none;padding-left:0}
+}
+.subj-del{margin:4px 2px 8px;padding:10px 12px;display:grid;gap:10px;font-size:13px;border:1px solid color-mix(in srgb,var(--danger) 45%,var(--line));border-radius:8px;background:color-mix(in srgb,var(--danger) 7%,var(--surface))}
+.subj-del p{margin:0;overflow-wrap:anywhere}
+.subj-del .acts{display:flex;gap:6px}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:var(--surface)}
+.btn.danger:hover{filter:brightness(1.08)}
+
 /* propriedades da nota */
 .props{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 14px;align-items:center;margin:14px 0 18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .props dt{color:var(--muted);font-size:13px}
